@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import maventest.bannerremover.FileSeeker.PictureFileSeeker;
 import maventest.bannerremover.config.Config;
 import maventest.bannerremover.sizechecker.ImageSize;

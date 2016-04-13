@@ -30,6 +30,12 @@ public final class Config {
     private final boolean recursive;
     private final Set<ImageSize> sizes;
 
+    /**
+     * @param targetDir ファイルの検索先ディレクトリ。
+     * @param destDir 条件に当てはまるファイルの移動先ディレクトリ。
+     * @param recursive 検索先ディレクトリを再起探索するか。
+     * @param sizes 移動するファイルの縦ピクセルと横ピクセルの値。
+     */
     public Config(File targetDir, File destDir, boolean recursive, Set<ImageSize> sizes) {
         this.targetDir = new File(targetDir.getAbsolutePath());
         if (!this.targetDir.isDirectory()) {
@@ -38,6 +44,9 @@ public final class Config {
         this.destDir = new File(destDir.getAbsolutePath());
         if (!this.destDir.isDirectory()) {
             throw new IllegalArgumentException("移動先がディレクトリではないか、存在しない。 " + this.destDir.getAbsolutePath());
+        }
+        if (this.targetDir.equals(this.destDir)) {
+            throw new IllegalArgumentException("送り側と受け側のディレクトリが同じ。");
         }
         this.recursive = recursive;
         if (sizes == null || sizes.isEmpty()) {
