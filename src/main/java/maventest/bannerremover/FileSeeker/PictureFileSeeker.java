@@ -1,13 +1,14 @@
 /*
  * 指定されたディレクトリ下の画像ファイルをリストアップする。
  */
-package bannerremover.FileSeeker;
+package maventest.bannerremover.FileSeeker;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import maventest.bannerremover.FileSeeker.ImageReaderFileFilter;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.FalseFileFilter;
 import org.apache.commons.io.filefilter.IOFileFilter;
@@ -18,8 +19,8 @@ import org.apache.commons.io.filefilter.TrueFileFilter;
  */
 public class PictureFileSeeker {
     
-    private File SourceDir;
-    private IOFileFilter extfilter = new ImageReaderFileFilter();
+    private final File SourceDir;
+    private final IOFileFilter extfilter = new ImageReaderFileFilter();
     private IOFileFilter dirf = TrueFileFilter.INSTANCE;
     
     public PictureFileSeeker(File SourceDir) {

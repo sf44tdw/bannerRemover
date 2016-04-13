@@ -2,13 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package bannerremover;
+package maventest.bannerremover;
 
-import bannerremover.FileSeeker.PictureFileSeeker;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+import maventest.bannerremover.FileSeeker.PictureFileSeeker;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
