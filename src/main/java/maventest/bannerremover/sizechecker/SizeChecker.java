@@ -1,27 +1,19 @@
 package maventest.bannerremover.sizechecker;
 
-/**
- * 壊れたファイルを読み込むとこんなエラーが出る。 at
- * java.util.ArrayList.elementData(ArrayList.java:418) at
- * java.util.ArrayList.get(ArrayList.java:431) at
- * com.sun.imageio.plugins.jpeg.JPEGImageReader.checkTablesOnly(JPEGImageReader.java:378)
- * at
- * com.sun.imageio.plugins.jpeg.JPEGImageReader.gotoImage(JPEGImageReader.java:481)
- * at
- * com.sun.imageio.plugins.jpeg.JPEGImageReader.readHeader(JPEGImageReader.java:602)
- * at
- * com.sun.imageio.plugins.jpeg.JPEGImageReader.readInternal(JPEGImageReader.java:1059)
- * at
- * com.sun.imageio.plugins.jpeg.JPEGImageReader.read(JPEGImageReader.java:1039)
- * at javax.imageio.ImageIO.read(ImageIO.java:1448) at
- * javax.imageio.ImageIO.read(ImageIO.java:1308)
- */
+//      壊れたファイルを読み込むとこんなエラーが出る。
+//      at java.util.ArrayList.elementData(ArrayList.java:418)
+//	at java.util.ArrayList.get(ArrayList.java:431)
+//	at com.sun.imageio.plugins.jpeg.JPEGImageReader.checkTablesOnly(JPEGImageReader.java:378)
+//	at com.sun.imageio.plugins.jpeg.JPEGImageReader.gotoImage(JPEGImageReader.java:481)
+//	at com.sun.imageio.plugins.jpeg.JPEGImageReader.readHeader(JPEGImageReader.java:602)
+//	at com.sun.imageio.plugins.jpeg.JPEGImageReader.readInternal(JPEGImageReader.java:1059)
+//	at com.sun.imageio.plugins.jpeg.JPEGImageReader.read(JPEGImageReader.java:1039)
+//	at javax.imageio.ImageIO.read(ImageIO.java:1448)
+//	at javax.imageio.ImageIO.read(ImageIO.java:1308)
 import maventest.bannerremover.checker.PictureChecker;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -72,7 +64,7 @@ public class SizeChecker implements PictureChecker {
                 //エラーが起きた場合、そのときのファイル名を出力する。
                 log.fatal("ファイル読み込み中にエラー ファイル = " + F.toString(), e);
             } catch (ArrayIndexOutOfBoundsException e) {
-                log.warn("壊れたファイルを読み込んだ可能性があります。 ファイル = " + F.toString(), e);
+                log.warn("壊れたファイルを読み込んだ可能性あり。 ファイル = " + F.toString(), e);
             }
 
             StringBuilder sb = new StringBuilder();

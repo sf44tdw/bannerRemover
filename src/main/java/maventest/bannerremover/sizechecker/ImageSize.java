@@ -6,14 +6,18 @@
 package maventest.bannerremover.sizechecker;
 
 /**
- *
+ * 画像のサイズを指定する。
  * @author normal
  */
 public class ImageSize {
 
     private final int Height;
     private final int Width;
-
+/**
+ * 
+     * @param Height 高さ方向のピクセル数。
+     * @param Width 幅方向のピクセル数。
+ */
     public ImageSize(int Height, int Width) {
         this.Height = Height;
         this.Width = Width;
