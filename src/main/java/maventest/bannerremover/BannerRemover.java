@@ -40,6 +40,9 @@ public class BannerRemover {
         sizes.add(new ImageSize(80, 80));
         sizes.add(new ImageSize(120, 120));
         sizes.add(new ImageSize(40, 198));
+        sizes.add(new ImageSize(32, 122));
+        sizes.add(new ImageSize(172, 241));
+        sizes.add(new ImageSize(40, 199));
 
         Config conf = new Config(src, dest, false, sizes);
 

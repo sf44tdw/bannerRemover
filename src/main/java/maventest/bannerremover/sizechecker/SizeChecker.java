@@ -54,8 +54,6 @@ public class SizeChecker {
         this.sizes = Collections.unmodifiableSet(temp);
     }
 
-    private final MessageFormat info = new MessageFormat("ファイルのパス={0} 画像サイズ(高さ,幅)=({1},{2}) 抽出対象画像サイズ(高さ,幅)=({3},{4})");
-
     /**
      * リストアップを行う。
      *
@@ -63,42 +61,42 @@ public class SizeChecker {
      */
     public Set<File> makeList() {
         Set<File> set_output = Collections.synchronizedSet(new HashSet<File>());
-        for (ImageSize size : this.getSizes()) {
-            for (File F : this.ImageList) {
-                StringBuilder sb = new StringBuilder();
-                Object[] parameters;
-                parameters = new Object[]{F.getAbsolutePath(), "UNKNOWN", "UNKNOWN", size.getHeight(), size.getWidth()};
-
-                if (set_output.contains(F)) {
-                    sb.append("別の条件をすでに満たしているファイル。");
-                    sb.append(info.format(parameters));
-                } else {
-                    try {
-                        BufferedImage Img = ImageIO.read(F);
-                        parameters = new Object[]{F.getAbsolutePath(), Img.getHeight(), Img.getWidth(), size.getHeight(), size.getWidth()};
-
-                        if (Img.getHeight() == size.getHeight() && Img.getWidth() == size.getWidth()) {
-                            sb.append("条件を満たすピクセルのファイルを発見。");
-                            sb.append(info.format(parameters));
-                            set_output.add(F);
-                        } else {
-                            sb.append("条件を満たすピクセルのファイルではない。");
-                            sb.append(info.format(parameters));
-                        }
-                    } catch (IOException e) {
-                        //エラーが起きた場合、そのときのファイル名を出力する。
-                        log.fatal("ファイル検索中にエラー ファイル = " + F.toString(), e);
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        log.warn("壊れたファイルを読み込んだ可能性があります。 ファイル = " + F.toString());
-                    }
-                }
-
-                if (log.isInfoEnabled()) {
-                    log.info(sb.toString());
-                }
-                sb = null;
+        for (File F : this.ImageList) {
+            ImageSize s = new ImageSize(0, 0);
+            try {
+                BufferedImage Img = ImageIO.read(F);
+                s = new ImageSize(Img.getHeight(), Img.getWidth());
+            } catch (IOException e) {
+                //エラーが起きた場合、そのときのファイル名を出力する。
+                log.fatal("ファイル読み込み中にエラー ファイル = " + F.toString(), e);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                log.warn("壊れたファイルを読み込んだ可能性があります。 ファイル = " + F.toString(), e);
             }
+
+            StringBuilder sb = new StringBuilder();
+
+            if (set_output.contains(F)) {
+                sb.append("別の条件をすでに満たしているファイル。");
+            } else if (this.getSizes().contains(s)) {
+                sb.append("条件を満たすピクセルのファイルを発見。");
+                sb.append("ピクセル(高さ,幅)=[");
+                sb.append(s.getHeight());
+                sb.append(",");
+                sb.append(s.getWidth());
+                sb.append("] ");
+                set_output.add(F);
+            } else {
+                sb.append("条件を満たすピクセルのファイルではない。");
+            }
+
+            sb.append(F.getAbsolutePath());
+            if (log.isInfoEnabled()) {
+                log.info(sb.toString());
+            }
+
+            sb = null;
         }
+
         return Collections.unmodifiableSet(set_output);
     }
 }
