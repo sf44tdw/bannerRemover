@@ -5,11 +5,12 @@
  */
 package maventest.bannerremover.sizechecker;
 
-import maventest.bannerremover.sizechecker.SizeChecker;
 import common.JpgFileList;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -32,7 +33,9 @@ public class SizeCheckerTest {
         this.targetInstance = new SizeChecker(this.fl.getImageList());
 
         //f5
-        this.targetInstance.setSize(new ImageSize(76, 110));
+        Set<ImageSize> temp = new HashSet<>();
+        temp.add(new ImageSize(76, 110));
+        this.targetInstance.setSizes(temp);
     }
 
     @BeforeClass
@@ -51,8 +54,6 @@ public class SizeCheckerTest {
     public void tearDown() {
     }
 
-
-
     /**
      * Test of makeList method, of class SizeChecker.
      */
@@ -60,34 +61,36 @@ public class SizeCheckerTest {
     public void testMakeList() {
         System.out.println("makeList");
         SizeChecker instance = this.targetInstance;
-        List<File> expResult = new ArrayList<>();
+        Set<File> expResult = new HashSet<>();
         expResult.add(this.fl.getF5());
-        List<File> result = instance.makeList();
+        Set<File> result = instance.makeList();
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of getSize method, of class SizeChecker.
+     * Test of getSizes method, of class SizeChecker.
      */
     @Test
-    public void testGetSize() {
-        System.out.println("getSize");
+    public void testGetSizes() {
+        System.out.println("getSizes");
         SizeChecker instance = this.targetInstance;
-        ImageSize expResult = new ImageSize(76, 110);
-        ImageSize result = instance.getSize();
+        Set<ImageSize> expResult = new HashSet<>();
+        expResult.add(new ImageSize(76, 110));
+        Set<ImageSize> result = instance.getSizes();
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of setSize method, of class SizeChecker.
+     * Test of setSizes method, of class SizeChecker.
      */
     @Test
-    public void testSetSize() {
-        System.out.println("setSize");
-        int Height = 110;
-        int Width = 76;
+    public void testSetSizes() {
+        System.out.println("setSizes");
+        Set<ImageSize> sizes = new HashSet<>();
+        sizes.add(new ImageSize(76, 110));
         SizeChecker instance = new SizeChecker(this.fl.getImageList());
-        instance.setSize(new ImageSize(Height, Width));
+        instance.setSizes(sizes);
+
     }
 
 }

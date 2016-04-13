@@ -4,13 +4,17 @@
  */
 package maventest.bannerremover;
 
-
-import maventest.bannerremover.sizechecker.SizeChecker;
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import maventest.bannerremover.FileSeeker.PictureFileSeeker;
+import maventest.bannerremover.config.Config;
+import maventest.bannerremover.sizechecker.ImageSize;
+import maventest.bannerremover.sizechecker.SizeChecker;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,90 +31,36 @@ public class BannerRemover {
     public static void main(String[] args) {
         Log log = LogFactory.getLog(BannerRemover.class);
 
-        try {
+        File dir = new File("");
+        File src = new File(dir, "");
+        File dest = new File(dir, "");
 
-            log.info("探査ディレクトリ          " + args[0]);
-            File Source = new File(args[0]);
+        Set<ImageSize> sizes = new HashSet<>();
+        sizes.add(new ImageSize(40, 200));
+        sizes.add(new ImageSize(80, 80));
+        sizes.add(new ImageSize(120, 120));
+        sizes.add(new ImageSize(40, 198));
 
-            if (Source.isDirectory()) {
-                PictureFileSeeker seeker = new PictureFileSeeker(Source);
-                log.info("検索対象を発見しました。");
+        Config conf = new Config(src, dest, false, sizes);
 
-                log.info("サブディレクトリ探査  " + args[1]);
-                boolean recursive = false;
-                switch (args[1]) {
-                    case "0":
-                        recursive = false;
-                        break;
+        PictureFileSeeker seeker = new PictureFileSeeker(conf.getTargetDir());
 
-                    case "1":
-                        recursive = true;
-                        break;
-                }
+        List<File> images = seeker.seek();
 
-                if (recursive == false) {
-                    log.info("サブディレクトリ探査は行いません。");
-                }
+        SizeChecker checker = new SizeChecker(images);
 
-                if (recursive == true) {
-                    log.info("サブディレクトリ探査を行います。");
-                }
-                seeker.setRecursive(recursive);
-                log.info("サブディレクトリ探査設定を完了。");
+        checker.setSizes(sizes);
 
-                log.info("移動対象ファイルの移動先 " + args[2]);
-                File Dest = new File(args[2]);
-                if (Dest.isDirectory() && Dest.exists()) {
-                    log.info("移動先の設定を完了。 " + Dest.toString());
-                } else {
-                    log.fatal("移動先がディレクトリではないか、存在しない");
-                    Dest = null;
-                }
+        Set<File> banners = checker.makeList();
 
-                log.info("探査開始。");
-                List<File> res = seeker.seek();
-                log.info("探査完了。件数= " + res.size());
-
-                if (res.size() > 0) {
-                    SizeChecker checker = new SizeChecker(res);
-
-                    log.info("高さ                 " + args[3]);
-                    int H;
-                    H = Integer.parseInt(args[3]);
-                    log.info("高さ設定を完了。高さ=" + H);
-
-                    log.info("幅                   " + args[4]);
-                    int W;
-                    W = Integer.parseInt(args[4]);
-                    log.info("幅設定を完了。幅=" + W);
-                    checker.setPixelSize(H, W);
-                    log.info("サイズ設定を完了。");
-
-                    log.info("サイズチェック開始。");
-                    List<File> res2 = checker.makeList();
-                    log.info("サイズチェック完了。件数= " + res2.size());
-
-                    if (Dest!=null) {
-                        Iterator<File> itf = res2.iterator();
-                        while (itf.hasNext()) {
-                            File F = itf.next();
-                            log.info("移動します。" + F.toString());
-                            FileUtils.moveFileToDirectory(F, Dest, true);
-                            log.info("移動しました。" + F.toString());
-                        }
-                    } else {
-                        log.info("移動先がnull");
-                    }
-
-                } else {
-                    log.info("ファイルがありません。");
-                }
-
-            } else {
-                log.info("検索先の設定に問題があります。");
+        for (File f : banners) {
+            try {
+                log.info("移動します。" + f.toString());
+                FileUtils.moveFileToDirectory(f, conf.getDestDir(), true);
+                log.info("移動しました。" + f.toString());
+            } catch (IOException ex) {
+                log.error(ex);
             }
-        } catch (NumberFormatException | IOException e) {
-            log.fatal("エラーです。", e);
         }
     }
 }

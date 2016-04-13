@@ -58,6 +58,6 @@ public class PictureFileSeeker {
         List<File> list = Collections.synchronizedList(new ArrayList<File>());
         Collection<File> files = FileUtils.listFiles(this.SourceDir, this.extfilter, this.dirf);
         list.addAll(files);
-        return list;
+        return Collections.unmodifiableList(list);
     }
 }
