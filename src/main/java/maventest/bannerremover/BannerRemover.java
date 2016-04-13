@@ -86,7 +86,7 @@ public class BannerRemover {
                     log.info("サイズ設定を完了。");
 
                     log.info("サイズチェック開始。");
-                    List<File> res2 = checker.listUp();
+                    List<File> res2 = checker.makeList();
                     log.info("サイズチェック完了。件数= " + res2.size());
 
                     if (Dest!=null) {

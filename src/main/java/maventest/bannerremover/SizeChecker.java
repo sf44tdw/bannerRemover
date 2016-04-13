@@ -1,12 +1,11 @@
-package bannerremover;
-
+package maventest.bannerremover;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import javax.imageio.ImageIO;
 import org.apache.commons.logging.Log;
@@ -14,7 +13,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class SizeChecker {
 
-    private Log log = LogFactory.getLog(SizeChecker.class);
+    private final Log log = LogFactory.getLog(SizeChecker.class);
     private final List<File> ImageList;
     private int Height;
     private int Width;
@@ -34,7 +33,7 @@ public class SizeChecker {
      * @param Height 高さ
      * @param Width 幅
      */
-    public synchronized void setPixelSize(int Height, int Width) {
+    public void setPixelSize(int Height, int Width) {
         this.Height = Height;
         this.Width = Width;
     }
@@ -47,33 +46,42 @@ public class SizeChecker {
         return Width;
     }
 
+    private final MessageFormat info = new MessageFormat("ファイルのパス={0} 画像サイズ(高さ,幅)=({1},{2}) 抽出対象画像サイズ(高さ,幅)=({3},{4})");
+
     /**
      * リストアップを行う。
      *
      * @return 対象のサイズの画像ファイル一覧
      */
-    public synchronized List<File> listUp() {
+    public List<File> makeList() {
+
         List<File> list_output = Collections.synchronizedList(new ArrayList<File>());
-        Iterator<File> itf = this.ImageList.iterator();
-        while (itf.hasNext()) {
-            File F = itf.next();
+        for (File F : this.ImageList) {
+            StringBuilder sb = new StringBuilder();
+
+            Object[] parameters;
+            parameters = new Object[]{F.getAbsolutePath(), "UNKNOWN", "UNKNOWN", this.getHeight(), this.getWidth()};
+
             try {
                 BufferedImage Img = ImageIO.read(F);
+                parameters = new Object[]{F.getAbsolutePath(), Img.getHeight(), Img.getWidth(), this.getHeight(), this.getWidth()};
+
                 if (Img.getHeight() == this.Height && Img.getWidth() == this.Width) {
-                    if (log.isInfoEnabled()) {
-                        log.info("該当するピクセル数の画像ファイルです。 " + F.toString());
-                    }
+                    sb.append("条件を満たすピクセルのファイルを発見。");
+                    sb.append(info.format(parameters));
                     list_output.add(F);
                 } else {
-                    if (log.isInfoEnabled()) {
-                        log.info("該当するピクセル数の画像ファイルではありません " + F.toString());
-                    }
+                    sb.append("条件を満たすピクセルのファイルではない。");
+                    sb.append(info.format(parameters));
+                }
+                if(log.isInfoEnabled()){
+                log.info(sb.toString());
                 }
             } catch (IOException e) {
                 //エラーが起きた場合、そのときのファイル名を出力する。
                 log.fatal("ファイル検索中にエラー ファイル = " + F.toString(), e);
             }
         }
-        return list_output;
+        return Collections.unmodifiableList(list_output);
     }
 }
