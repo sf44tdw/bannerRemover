@@ -16,6 +16,7 @@ package maventest.bannerremover.sizechecker;
  * at javax.imageio.ImageIO.read(ImageIO.java:1448) at
  * javax.imageio.ImageIO.read(ImageIO.java:1308)
  */
+import maventest.bannerremover.checker.PictureChecker;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +30,7 @@ import javax.imageio.ImageIO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class SizeChecker {
+public class SizeChecker implements PictureChecker {
 
     private final Log log = LogFactory.getLog(SizeChecker.class);
     private final List<File> ImageList;
@@ -59,6 +60,7 @@ public class SizeChecker {
      *
      * @return 対象のサイズの画像ファイル一覧
      */
+    @Override
     public Set<File> makeList() {
         Set<File> set_output = Collections.synchronizedSet(new HashSet<File>());
         for (File F : this.ImageList) {
