@@ -1,4 +1,4 @@
-package maventest.bannerremover;
+package maventest.bannerremover.sizechecker;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -15,8 +15,7 @@ public class SizeChecker {
 
     private final Log log = LogFactory.getLog(SizeChecker.class);
     private final List<File> ImageList;
-    private int Height;
-    private int Width;
+    private ImageSize size;
 
     /**
      * 渡されたファイルリストに載っている画像ファイルのピクセル数が特定のサイズであるかチェックし、一致したファイルのみをリストにする。
@@ -27,23 +26,12 @@ public class SizeChecker {
         this.ImageList = ImageList;
     }
 
-    /**
-     * リストアップ対象となる縦横のピクセルのサイズを設定する。
-     *
-     * @param Height 高さ
-     * @param Width 幅
-     */
-    public void setPixelSize(int Height, int Width) {
-        this.Height = Height;
-        this.Width = Width;
+    public ImageSize getSize() {
+        return size;
     }
 
-    public int getHeight() {
-        return Height;
-    }
-
-    public int getWidth() {
-        return Width;
+    public void setSize(ImageSize size) {
+        this.size = size;
     }
 
     private final MessageFormat info = new MessageFormat("ファイルのパス={0} 画像サイズ(高さ,幅)=({1},{2}) 抽出対象画像サイズ(高さ,幅)=({3},{4})");
@@ -60,13 +48,13 @@ public class SizeChecker {
             StringBuilder sb = new StringBuilder();
 
             Object[] parameters;
-            parameters = new Object[]{F.getAbsolutePath(), "UNKNOWN", "UNKNOWN", this.getHeight(), this.getWidth()};
+            parameters = new Object[]{F.getAbsolutePath(), "UNKNOWN", "UNKNOWN", this.getSize().getHeight(), this.getSize().getWidth()};
 
             try {
                 BufferedImage Img = ImageIO.read(F);
-                parameters = new Object[]{F.getAbsolutePath(), Img.getHeight(), Img.getWidth(), this.getHeight(), this.getWidth()};
+                parameters = new Object[]{F.getAbsolutePath(), Img.getHeight(), Img.getWidth(), this.getSize().getHeight(), this.getSize().getWidth()};
 
-                if (Img.getHeight() == this.Height && Img.getWidth() == this.Width) {
+                if (Img.getHeight() == this.getSize().getHeight() && Img.getWidth() == this.getSize().getWidth()) {
                     sb.append("条件を満たすピクセルのファイルを発見。");
                     sb.append(info.format(parameters));
                     list_output.add(F);
@@ -74,8 +62,8 @@ public class SizeChecker {
                     sb.append("条件を満たすピクセルのファイルではない。");
                     sb.append(info.format(parameters));
                 }
-                if(log.isInfoEnabled()){
-                log.info(sb.toString());
+                if (log.isInfoEnabled()) {
+                    log.info(sb.toString());
                 }
             } catch (IOException e) {
                 //エラーが起きた場合、そのときのファイル名を出力する。

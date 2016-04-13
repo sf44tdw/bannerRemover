@@ -5,6 +5,7 @@
 package maventest.bannerremover;
 
 
+import maventest.bannerremover.sizechecker.SizeChecker;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;

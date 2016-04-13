@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+  <colors>
+    <background>#808080</background>
+    <text>#000000</text>
+    <header>#008000</header>
+    <link normal="#000080" visited="#800080"/>
+    <default>${colors.header}</default>
+  </colors>
+  <elements>
+    <element type="1">a</element>
+    <element type="1">b</element>
+    <element type="2">c</element>
+  </elements>
+  <map>
+    <entry>
+  	  <key>a</key>
+  	  <value>1</value>
+    </entry>
+    <entry>
+  	  <key>b</key>
+  	  <value>2</value>
+    </entry>
+  </map>
+</root>
