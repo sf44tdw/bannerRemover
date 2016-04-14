@@ -23,7 +23,7 @@ import maventest.bannerremover.sizechecker.ImageSize;
  *
  * @author normal
  */
-public final class Config {
+public final class ConfigValueChecker {
 
     private final File targetDir;
     private final File destDir;
@@ -36,7 +36,7 @@ public final class Config {
      * @param recursive 検索先ディレクトリを再起探索するか。
      * @param sizes 移動するファイルの縦ピクセルと横ピクセルの値。
      */
-    public Config(File targetDir, File destDir, boolean recursive, Set<ImageSize> sizes) {
+    public ConfigValueChecker(File targetDir, File destDir, boolean recursive, Set<ImageSize> sizes) {
         this.targetDir = new File(targetDir.getAbsolutePath());
         if (!this.targetDir.isDirectory()) {
             throw new IllegalArgumentException("検索先がディレクトリではないか、存在しない。 " + this.targetDir.getAbsolutePath());
@@ -97,13 +97,13 @@ public final class Config {
                 if (props[idx].getReadMethod() != null) {
                     value = props[idx].getReadMethod()
                             .invoke(this, new Object[]{});
-                    if (value instanceof Config) {
+                    if (value instanceof ConfigValueChecker) {
                         buf.append("@");  //$NON-NLS-1$
                         buf.append(value.hashCode());
                     } else if (value instanceof Collection) {
                         buf.append("{");  //$NON-NLS-1$
                         for (Object element : ((Collection<?>) value)) {
-                            if (element instanceof Config) {
+                            if (element instanceof ConfigValueChecker) {
                                 buf.append("@");  //$NON-NLS-1$
                                 buf.append(element.hashCode());
                             } else {
@@ -117,7 +117,7 @@ public final class Config {
                         for (Object key : map.keySet()) {
                             Object element = map.get(key);
                             buf.append(key.toString()).append("=");
-                            if (element instanceof Config) {
+                            if (element instanceof ConfigValueChecker) {
                                 buf.append("@");  //$NON-NLS-1$
                                 buf.append(element.hashCode());
                             } else {

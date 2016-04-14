@@ -21,18 +21,18 @@ import static org.junit.Assert.*;
  *
  * @author normal
  */
-public class ConfigTest {
+public class ConfigValueCheckerTest {
 
     private final Set<ImageSize> temp;
 
     private final JpgFileList fl;
-    private final Config conf;
+    private final ConfigValueChecker conf;
 
-    public ConfigTest() {
+    public ConfigValueCheckerTest() {
         temp = new HashSet<>();
         temp.add(new ImageSize(76, 110));
         fl = new JpgFileList();
-        conf = new Config(this.fl.getSourceDir(), new File("testdata"), true, temp);
+        conf = new ConfigValueChecker(this.fl.getSourceDir(), new File("testdata"), true, temp);
     }
 
     @BeforeClass
@@ -54,64 +54,64 @@ public class ConfigTest {
     @Test(expected = IllegalArgumentException.class)
     public void construct1() {
         System.out.println("検索先がディレクトリではないか、存在しない");
-        Config instance = new Config(new File("djwu2se"), new File("testdata"), true, temp);
+        ConfigValueChecker instance = new ConfigValueChecker(new File("djwu2se"), new File("testdata"), true, temp);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void construct2() {
         System.out.println("移動先がディレクトリではないか、存在しない");
-        Config instance = new Config(this.fl.getSourceDir(), new File("djwu2se"), true, temp);
+        ConfigValueChecker instance = new ConfigValueChecker(this.fl.getSourceDir(), new File("djwu2se"), true, temp);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void construct3() {
         System.out.println("送り側と受け側のディレクトリが同じ");
-        Config instance = new Config(this.fl.getSourceDir(), this.fl.getSourceDir(), true, temp);
+        ConfigValueChecker instance = new ConfigValueChecker(this.fl.getSourceDir(), this.fl.getSourceDir(), true, temp);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void construct4() {
         System.out.println("画像サイズの設定がされていない");
-        Config instance = new Config(this.fl.getSourceDir(), new File("testdata"), true, new HashSet<ImageSize>());
+        ConfigValueChecker instance = new ConfigValueChecker(this.fl.getSourceDir(), new File("testdata"), true, new HashSet<ImageSize>());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void construct5() {
         System.out.println("画像サイズの設定がされていない");
-        Config instance = new Config(this.fl.getSourceDir(), new File("testdata"), true, null);
+        ConfigValueChecker instance = new ConfigValueChecker(this.fl.getSourceDir(), new File("testdata"), true, null);
     }
 
     /**
-     * Test of getTargetDir method, of class Config.
+     * Test of getTargetDir method, of class ConfigValueChecker.
      */
     @Test
     public void testGetTargetDir() {
         System.out.println("getTargetDir");
-        Config instance = this.conf;
+        ConfigValueChecker instance = this.conf;
         File expResult = this.fl.getSourceDir();
         File result = instance.getTargetDir();
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of getDestDir method, of class Config.
+     * Test of getDestDir method, of class ConfigValueChecker.
      */
     @Test
     public void testGetDestDir() {
         System.out.println("getDestDir");
-        Config instance = this.conf;
+        ConfigValueChecker instance = this.conf;
         File expResult = new File(new File("testdata").getAbsolutePath());
         File result = instance.getDestDir();
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of getSizes method, of class Config.
+     * Test of getSizes method, of class ConfigValueChecker.
      */
     @Test
     public void testGetSizes() {
         System.out.println("getSizes");
-        Config instance = this.conf;
+        ConfigValueChecker instance = this.conf;
         Set<ImageSize> expResult = new HashSet<>();
         expResult.add(new ImageSize(76, 110));
         Set<ImageSize> result = instance.getSizes();
@@ -119,22 +119,22 @@ public class ConfigTest {
     }
 
     /**
-     * Test of toString method, of class Config.
+     * Test of toString method, of class ConfigValueChecker.
      */
     @Test
     public void testToString() {
         System.out.println("toString");
-        Config instance = this.conf;
+        ConfigValueChecker instance = this.conf;
         System.out.println(instance.toString());
     }
 
     /**
-     * Test of isRecursive method, of class Config.
+     * Test of isRecursive method, of class ConfigValueChecker.
      */
     @Test
     public void testIsRecursive() {
         System.out.println("isRecursive");
-        Config instance = this.conf;
+        ConfigValueChecker instance = this.conf;
         boolean expResult = true;
         boolean result = instance.isRecursive();
         assertEquals(expResult, result);

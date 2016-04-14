@@ -18,9 +18,9 @@ import static org.junit.Assert.*;
  * @author normal
  */
 public class ImageReaderFileFilterTest {
-
-    private final File targetFile1 = new File("testdata/target.txt");
-    private final File targetFile2 = new File("testdata/target.jpg");
+    private final File targetDir=new File("testdata/filefilter/");
+    private final File targetFile1 = new File(targetDir,"target.txt");
+    private final File targetFile2 = new File(targetDir,"target.jpg");
 
     public ImageReaderFileFilterTest() {
     }
@@ -100,7 +100,7 @@ public class ImageReaderFileFilterTest {
     public void testAccept_File_String() {
         System.out.println("accept");
         File file = this.targetFile1;
-        String string = "";
+        String string = "txt";
         ImageReaderFileFilter instance = new ImageReaderFileFilter();
         boolean expResult = false;
         boolean result = instance.accept(file, string);

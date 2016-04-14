@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import maventest.bannerremover.FileSeeker.PictureFileSeeker;
-import maventest.bannerremover.config.Config;
+import maventest.bannerremover.config.ConfigValueChecker;
 import maventest.bannerremover.sizechecker.ImageSize;
 import maventest.bannerremover.sizechecker.SizeChecker;
 import org.apache.commons.io.FileUtils;
@@ -42,7 +42,7 @@ public class BannerRemover {
         sizes.add(new ImageSize(172, 241));
         sizes.add(new ImageSize(40, 199));
 
-        Config conf = new Config(src, dest, false, sizes);
+        ConfigValueChecker conf = new ConfigValueChecker(src, dest, false, sizes);
 
         PictureFileSeeker seeker = new PictureFileSeeker(conf.getTargetDir());
 
