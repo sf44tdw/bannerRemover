@@ -140,3 +140,65 @@
 [INFO ] [2016/04/17 23:27:26.936] [main] - 条件を満たすピクセルのファイルではない。H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\forList\00000004.jpg
 [INFO ] [2016/04/17 23:27:26.937] [main] - 条件を満たすピクセルのファイルを発見。ピクセル(高さ,幅)=[76,110] H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\forList\00000005.jpg
 [INFO ] [2016/04/17 23:27:26.938] [main] - 条件を満たすピクセルのファイルではない。H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\forList\00000006.jpg
+[INFO ] [2016/04/18 07:27:43.778] [main] - 設定ファイルロード開始。ファイル=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\SampleConfig\normal.toml
+[INFO ] [2016/04/18 07:27:43.833] [main] - 検索先=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\dummysrc
+[INFO ] [2016/04/18 07:27:43.833] [main] - 移動先=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\dummysrc
+[INFO ] [2016/04/18 07:27:43.834] [main] - サブディレクトリ探索実施フラグ=true
+[INFO ] [2016/04/18 07:27:43.834] [main] - 選択対象画像ピクセル=ImageSize{Height=20, Width=30}
+[INFO ] [2016/04/18 07:27:43.834] [main] - 選択対象画像ピクセル=ImageSize{Height=40, Width=50}
+[INFO ] [2016/04/18 07:27:43.834] [main] - 選択対象画像ピクセル=ImageSize{Height=60, Width=70}
+[INFO ] [2016/04/18 07:27:43.836] [main] - 設定ファイルロード開始。ファイル=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\SampleConfig\normal.toml
+[INFO ] [2016/04/18 07:27:43.837] [main] - 検索先=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\dummysrc
+[INFO ] [2016/04/18 07:27:43.837] [main] - 移動先=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\dummysrc
+[INFO ] [2016/04/18 07:27:43.837] [main] - サブディレクトリ探索実施フラグ=true
+[INFO ] [2016/04/18 07:27:43.837] [main] - 選択対象画像ピクセル=ImageSize{Height=20, Width=30}
+[INFO ] [2016/04/18 07:27:43.837] [main] - 選択対象画像ピクセル=ImageSize{Height=40, Width=50}
+[INFO ] [2016/04/18 07:27:43.837] [main] - 選択対象画像ピクセル=ImageSize{Height=60, Width=70}
+[INFO ] [2016/04/18 07:27:43.837] [main] - 設定ファイルロード開始。ファイル=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\SampleConfig\normal.toml
+[INFO ] [2016/04/18 07:27:43.838] [main] - 検索先=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\dummysrc
+[INFO ] [2016/04/18 07:27:43.838] [main] - 移動先=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\dummysrc
+[INFO ] [2016/04/18 07:27:43.838] [main] - サブディレクトリ探索実施フラグ=true
+[INFO ] [2016/04/18 07:27:43.839] [main] - 選択対象画像ピクセル=ImageSize{Height=20, Width=30}
+[INFO ] [2016/04/18 07:27:43.839] [main] - 選択対象画像ピクセル=ImageSize{Height=40, Width=50}
+[INFO ] [2016/04/18 07:27:43.839] [main] - 選択対象画像ピクセル=ImageSize{Height=60, Width=70}
+[INFO ] [2016/04/18 07:27:43.840] [main] - 設定ファイルロード開始。ファイル=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\SampleConfig\falserecursive.toml
+[INFO ] [2016/04/18 07:27:43.841] [main] - 検索先=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\dummysrc
+[INFO ] [2016/04/18 07:27:43.841] [main] - 移動先=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\dummysrc
+[INFO ] [2016/04/18 07:27:43.841] [main] - サブディレクトリ探索実施フラグ=false
+[INFO ] [2016/04/18 07:27:43.841] [main] - 選択対象画像ピクセル=ImageSize{Height=20, Width=30}
+[INFO ] [2016/04/18 07:27:43.841] [main] - 選択対象画像ピクセル=ImageSize{Height=40, Width=50}
+[INFO ] [2016/04/18 07:27:43.842] [main] - 選択対象画像ピクセル=ImageSize{Height=60, Width=70}
+[INFO ] [2016/04/18 07:27:43.842] [main] - 設定ファイルロード開始。ファイル=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\SampleConfig\normal.toml
+[INFO ] [2016/04/18 07:27:43.843] [main] - 検索先=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\dummysrc
+[INFO ] [2016/04/18 07:27:43.843] [main] - 移動先=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\dummysrc
+[INFO ] [2016/04/18 07:27:43.843] [main] - サブディレクトリ探索実施フラグ=true
+[INFO ] [2016/04/18 07:27:43.843] [main] - 選択対象画像ピクセル=ImageSize{Height=20, Width=30}
+[INFO ] [2016/04/18 07:27:43.843] [main] - 選択対象画像ピクセル=ImageSize{Height=40, Width=50}
+[INFO ] [2016/04/18 07:27:43.843] [main] - 選択対象画像ピクセル=ImageSize{Height=60, Width=70}
+[INFO ] [2016/04/18 07:27:43.843] [main] - 設定ファイルロード開始。ファイル=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\SampleConfig\norecursive.toml
+[INFO ] [2016/04/18 07:27:43.844] [main] - 検索先=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\dummysrc
+[INFO ] [2016/04/18 07:27:43.844] [main] - 移動先=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\dummysrc
+[INFO ] [2016/04/18 07:27:43.844] [main] - サブディレクトリ探索実施フラグ=true
+[INFO ] [2016/04/18 07:27:43.845] [main] - 選択対象画像ピクセル=ImageSize{Height=20, Width=30}
+[INFO ] [2016/04/18 07:27:43.845] [main] - 選択対象画像ピクセル=ImageSize{Height=40, Width=50}
+[INFO ] [2016/04/18 07:27:43.845] [main] - 選択対象画像ピクセル=ImageSize{Height=60, Width=70}
+[INFO ] [2016/04/18 07:27:43.845] [main] - 設定ファイルロード開始。ファイル=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\SampleConfig\nosrc.toml
+[INFO ] [2016/04/18 07:27:43.849] [main] - 設定ファイルロード開始。ファイル=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\SampleConfig\nodest.toml
+[INFO ] [2016/04/18 07:27:43.850] [main] - 設定ファイルロード開始。ファイル=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\SampleConfig\samedir.toml
+[INFO ] [2016/04/18 07:27:43.851] [main] - 設定ファイルロード開始。ファイル=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\SampleConfig\nosizes.toml
+[INFO ] [2016/04/18 07:27:43.852] [main] - 検索先=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\dummysrc
+[INFO ] [2016/04/18 07:27:43.852] [main] - 移動先=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\dummysrc
+[INFO ] [2016/04/18 07:27:43.852] [main] - サブディレクトリ探索実施フラグ=true
+[INFO ] [2016/04/18 07:27:43.852] [main] - 設定ファイルロード開始。ファイル=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\SampleConfig\normal.toml
+[INFO ] [2016/04/18 07:27:43.853] [main] - 検索先=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\dummysrc
+[INFO ] [2016/04/18 07:27:43.853] [main] - 移動先=H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\dummysrc
+[INFO ] [2016/04/18 07:27:43.853] [main] - サブディレクトリ探索実施フラグ=true
+[INFO ] [2016/04/18 07:27:43.853] [main] - 選択対象画像ピクセル=ImageSize{Height=20, Width=30}
+[INFO ] [2016/04/18 07:27:43.853] [main] - 選択対象画像ピクセル=ImageSize{Height=40, Width=50}
+[INFO ] [2016/04/18 07:27:43.853] [main] - 選択対象画像ピクセル=ImageSize{Height=60, Width=70}
+[INFO ] [2016/04/18 07:27:43.929] [main] - 条件を満たすピクセルのファイルではない。H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\forList\00000001.jpg
+[INFO ] [2016/04/18 07:27:43.931] [main] - 条件を満たすピクセルのファイルではない。H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\forList\00000002.jpg
+[INFO ] [2016/04/18 07:27:43.932] [main] - 条件を満たすピクセルのファイルではない。H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\forList\00000003.jpg
+[INFO ] [2016/04/18 07:27:43.933] [main] - 条件を満たすピクセルのファイルではない。H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\forList\00000004.jpg
+[INFO ] [2016/04/18 07:27:43.934] [main] - 条件を満たすピクセルのファイルを発見。ピクセル(高さ,幅)=[76,110] H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\forList\00000005.jpg
+[INFO ] [2016/04/18 07:27:43.935] [main] - 条件を満たすピクセルのファイルではない。H:\data007\Programs\NetBeansProjects\BannerRemover\testdata\forList\00000006.jpg
