@@ -25,8 +25,7 @@ public class BannerRemover {
      */
     public static void main(String[] args) {
         Log log = LogFactory.getLog(BannerRemover.class);
-        
-        
+
         ConfigLoader conf = null;
         try {
             conf = new ConfigLoader(new File(args[0]));
@@ -36,13 +35,14 @@ public class BannerRemover {
         PictureFileSeeker seeker = new PictureFileSeeker(conf.getSourceDir());
 
         List<File> images = seeker.seek();
-
+        log.info("画像ファイル探索完了。ファイル数=" + images.size());
+        
         SizeChecker checker = new SizeChecker(images);
-
         checker.setSizes(conf.getSizes());
-
+        
         Set<File> banners = checker.makeList();
-
+        log.info("指定サイズのファイル数=" + images.size());
+        
         for (File f : banners) {
             try {
                 log.info("移動します。" + f.toString());
@@ -52,5 +52,6 @@ public class BannerRemover {
                 log.fatal(ex);
             }
         }
+        log.info("正常終了。");
     }
 }
