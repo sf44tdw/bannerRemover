@@ -15,9 +15,9 @@ import java.util.Set;
 public interface PictureChecker {
 
     /**
-     * リストアップを行う。
+     * 条件に該当する画像ファイルだけリストに加える。
      *
-     * @return 対象のサイズの画像ファイル一覧
+     * @return 条件に該当する画像ファイルの一覧。
      */
     Set<File> makeList();
     

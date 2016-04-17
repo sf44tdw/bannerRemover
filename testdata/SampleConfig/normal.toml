@@ -1,0 +1,28 @@
+title = "設定ファイルのサンプル(サブディレクトリ探索パラメータfalse)"
+
+#ディレクトリ
+[directory]
+  #探索するディレクトリ
+  source="testdata/dummysrc"
+  #条件に一致するファイルの移動先
+  dest="testdata/dummydest"
+
+#サブディレクトリ探索するか。trueならばする。省略されている場合はtrueとみなす。
+[recursive]
+  recursive=true
+
+#移動対象とする画像ファイルのピクセル数
+[[imagesize]]
+  #高さ
+  Height=20
+  #幅
+  Width=30
+
+[[imagesize]]
+  Height=40
+  Width=50
+
+[[imagesize]]
+  Height=60
+  Width=70
+

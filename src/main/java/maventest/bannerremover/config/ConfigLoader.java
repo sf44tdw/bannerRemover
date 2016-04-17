@@ -5,60 +5,132 @@
  */
 package maventest.bannerremover.config;
 
+import com.moandjiezana.toml.Toml;
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Deque;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import maventest.bannerremover.sizechecker.ImageSize;
 
 /**
- * 設定
+ * 設定ファイルのロードとチェックを行う。
  *
  * @author normal
  */
-public final class ConfigValueChecker {
+public final class ConfigLoader {
 
-    private final File targetDir;
+    private static enum CONFIG_FILE_KEY {
+        DIRECTORY("directory"),
+        SOURCE_DIR(DIRECTORY, "source"),
+        DEST_DIR(DIRECTORY, "dest"),
+        RECURSIVE("recursive"),
+        RECURSIVE_FLAG(RECURSIVE, "recursive"),
+        IMAGE_SIZE("imagesize"),
+        HEIGHT(IMAGE_SIZE, "Height"),
+        WIDTH(IMAGE_SIZE, "Width");
+
+        private final String key_full;
+        private final String lastKey;
+
+        private CONFIG_FILE_KEY(String key) {
+            this(null, key);
+        }
+
+        private CONFIG_FILE_KEY(CONFIG_FILE_KEY parent, String key) {
+
+            CONFIG_FILE_KEY parent_t = parent;
+            String key_t = key;
+            this.lastKey = key_t;
+            Deque<String> stack = new ArrayDeque<>();
+            stack.add(key_t);
+            if (parent_t != null) {
+                stack.add(".");
+                stack.add(parent_t.getKey());
+            }
+            StringBuilder sb = new StringBuilder();
+            Iterator<String> e = stack.descendingIterator();
+            while (e.hasNext()) {
+                sb.append(e.next());
+            }
+            this.key_full = sb.toString();
+        }
+
+        public String getLastKey() {
+            return lastKey;
+        }
+
+        public String getKey() {
+            return this.key_full;
+        }
+
+        @Override
+        public String toString() {
+            return "CONFIG_FILE_KEY{" + "key_full=" + key_full + ", lastKey=" + lastKey + '}';
+        }
+
+    }
+
+    private final File sourceDir;
     private final File destDir;
     private final boolean recursive;
     private final Set<ImageSize> sizes;
 
     /**
-     * @param targetDir ファイルの検索先ディレクトリ。
-     * @param destDir 条件に当てはまるファイルの移動先ディレクトリ。
-     * @param recursive 検索先ディレクトリを再起探索するか。
-     * @param sizes 移動するファイルの縦ピクセルと横ピクセルの値。
+     * @param configFile 設定ファイルのパス
      */
-    public ConfigValueChecker(File targetDir, File destDir, boolean recursive, Set<ImageSize> sizes) {
-        this.targetDir = new File(targetDir.getAbsolutePath());
-        if (!this.targetDir.isDirectory()) {
-            throw new IllegalArgumentException("検索先がディレクトリではないか、存在しない。 " + this.targetDir.getAbsolutePath());
+    public ConfigLoader(File configFile) {
+        File t_file = new File(configFile.getAbsolutePath());
+        if (!t_file.isFile()) {
+            throw new IllegalArgumentException("設定ファイルの読み込み先がファイルではないか、存在しない。 " + t_file.getAbsolutePath());
         }
-        this.destDir = new File(destDir.getAbsolutePath());
+
+        Toml toml = new Toml().read(configFile);
+
+        this.sourceDir = new File(toml.getString(CONFIG_FILE_KEY.SOURCE_DIR.getKey()));
+        if (!this.sourceDir.isDirectory()) {
+            throw new IllegalArgumentException("検索先がディレクトリではないか、存在しない。 " + this.sourceDir.getAbsolutePath());
+        }
+
+        this.destDir = new File(toml.getString(CONFIG_FILE_KEY.DEST_DIR.getKey()));
         if (!this.destDir.isDirectory()) {
             throw new IllegalArgumentException("移動先がディレクトリではないか、存在しない。 " + this.destDir.getAbsolutePath());
         }
-        if (this.targetDir.equals(this.destDir)) {
+
+        if (this.sourceDir.equals(this.destDir)) {
             throw new IllegalArgumentException("送り側と受け側のディレクトリが同じ。");
         }
-        this.recursive = recursive;
-        if (sizes == null || sizes.isEmpty()) {
+
+        //省略されている場合はサブディレクトリ探索を行うものとする。
+        this.recursive = toml.getBoolean(CONFIG_FILE_KEY.RECURSIVE_FLAG.getKey(), true);
+
+        Set<ImageSize> sizes_t = new HashSet<>();
+
+        List<HashMap<String, Long>> sizes_Raw = toml.getList(CONFIG_FILE_KEY.IMAGE_SIZE.getKey());
+        if (sizes_Raw == null) {
             throw new IllegalArgumentException("画像サイズの設定がされていない。");
         }
-        Set<ImageSize> temp = new HashSet<>();
-        temp.addAll(sizes);
-        this.sizes = Collections.unmodifiableSet(temp);
+        for (HashMap<String, Long> size_Raw : sizes_Raw) {
+            int h = new Integer(size_Raw.get(CONFIG_FILE_KEY.HEIGHT.getLastKey()).toString());
+            int w = new Integer(size_Raw.get(CONFIG_FILE_KEY.WIDTH.getLastKey()).toString());
+            sizes_t.add(new ImageSize(h, w));
+        }
+        this.sizes = Collections.unmodifiableSet(sizes_t);
     }
 
-    public File getTargetDir() {
-        return targetDir;
+    public File getSourceDir() {
+        return sourceDir;
     }
 
     public File getDestDir() {
@@ -97,13 +169,13 @@ public final class ConfigValueChecker {
                 if (props[idx].getReadMethod() != null) {
                     value = props[idx].getReadMethod()
                             .invoke(this, new Object[]{});
-                    if (value instanceof ConfigValueChecker) {
+                    if (value instanceof ConfigLoader) {
                         buf.append("@");  //$NON-NLS-1$
                         buf.append(value.hashCode());
                     } else if (value instanceof Collection) {
                         buf.append("{");  //$NON-NLS-1$
                         for (Object element : ((Collection<?>) value)) {
-                            if (element instanceof ConfigValueChecker) {
+                            if (element instanceof ConfigLoader) {
                                 buf.append("@");  //$NON-NLS-1$
                                 buf.append(element.hashCode());
                             } else {
@@ -117,7 +189,7 @@ public final class ConfigValueChecker {
                         for (Object key : map.keySet()) {
                             Object element = map.get(key);
                             buf.append(key.toString()).append("=");
-                            if (element instanceof ConfigValueChecker) {
+                            if (element instanceof ConfigLoader) {
                                 buf.append("@");  //$NON-NLS-1$
                                 buf.append(element.hashCode());
                             } else {

@@ -48,9 +48,8 @@ public class SizeChecker implements PictureChecker {
     }
 
     /**
-     * リストアップを行う。
-     *
-     * @return 対象のサイズの画像ファイル一覧
+     * 指定されたピクセル数の画像ファイル一覧を作成する。
+     * @return 条件に該当する画像ファイルの一覧。
      */
     @Override
     public Set<File> makeList() {
@@ -64,7 +63,7 @@ public class SizeChecker implements PictureChecker {
                 //エラーが起きた場合、そのときのファイル名を出力する。
                 log.fatal("ファイル読み込み中にエラー ファイル = " + F.toString(), e);
             } catch (ArrayIndexOutOfBoundsException e) {
-                log.warn("壊れたファイルを読み込んだ可能性あり。 ファイル = " + F.toString(), e);
+                log.fatal("壊れたファイルを読み込んだ可能性あり。 ファイル = " + F.toString(), e);
             }
 
             StringBuilder sb = new StringBuilder();

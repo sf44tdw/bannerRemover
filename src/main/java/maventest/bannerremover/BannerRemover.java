@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import maventest.bannerremover.FileSeeker.PictureFileSeeker;
-import maventest.bannerremover.config.ConfigValueChecker;
+import maventest.bannerremover.config.ConfigLoader;
 import maventest.bannerremover.sizechecker.ImageSize;
 import maventest.bannerremover.sizechecker.SizeChecker;
 import org.apache.commons.io.FileUtils;
@@ -29,28 +29,16 @@ public class BannerRemover {
     public static void main(String[] args) {
         Log log = LogFactory.getLog(BannerRemover.class);
 
-        File dir = new File("");
-        File src = new File(dir, "");
-        File dest = new File(dir, "");
 
-        Set<ImageSize> sizes = new HashSet<>();
-        sizes.add(new ImageSize(40, 200));
-        sizes.add(new ImageSize(80, 80));
-        sizes.add(new ImageSize(120, 120));
-        sizes.add(new ImageSize(40, 198));
-        sizes.add(new ImageSize(32, 122));
-        sizes.add(new ImageSize(172, 241));
-        sizes.add(new ImageSize(40, 199));
+        ConfigLoader conf = new ConfigLoader(new File(args[0]));
 
-        ConfigValueChecker conf = new ConfigValueChecker(src, dest, false, sizes);
-
-        PictureFileSeeker seeker = new PictureFileSeeker(conf.getTargetDir());
+        PictureFileSeeker seeker = new PictureFileSeeker(conf.getSourceDir());
 
         List<File> images = seeker.seek();
 
         SizeChecker checker = new SizeChecker(images);
 
-        checker.setSizes(sizes);
+        checker.setSizes(conf.getSizes());
 
         Set<File> banners = checker.makeList();
 
