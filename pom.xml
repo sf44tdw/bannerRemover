@@ -60,3 +60,21 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 </project>
+
+<plugins>
+  <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-jar-plugin</artifactId>
+    <configuration>
+      <archive>
+        <manifest>
+          <mainClass>maventest.bannerremover.BannerRemover</mainClass>
+          <packageName>maventest.bannerremover</packageName>
+          <addClasspath>true</addClasspath>
+          <addExtensions>true</addExtensions>
+          <classpathPrefix>lib</classpathPrefix>
+        </manifest>
+      </archive>
+    </configuration>
+  </plugin>
+</plugins>
