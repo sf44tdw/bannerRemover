@@ -21,8 +21,7 @@ import org.apache.commons.logging.LogFactory;
 public class BannerRemover {
 
     /**
-     * @param args the command line arguments 検索対象の最上位ディレクトリ
-     * サブディレクトリの探査を行うかを0か1で指定 画像の高さ 画像の幅の順で指定
+     * @param args the command line arguments 設定ファイルのパス
      */
     public static void main(String[] args) {
         Log log = LogFactory.getLog(BannerRemover.class);
