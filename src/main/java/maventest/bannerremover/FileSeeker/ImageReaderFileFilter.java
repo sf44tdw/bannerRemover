@@ -75,7 +75,7 @@ public class ImageReaderFileFilter implements IOFileFilter {
     /**
      * 対応する拡張子のファイルか判定する。
      *
-     * @param target
+     * @param target 調べたいファイル
      * @return 対応する拡張子ならtrue、それ以外はfalseを返す。
      */
     @Override
