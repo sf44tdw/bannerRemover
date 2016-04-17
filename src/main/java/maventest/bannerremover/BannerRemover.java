@@ -6,12 +6,10 @@ package maventest.bannerremover;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import maventest.bannerremover.FileSeeker.PictureFileSeeker;
 import maventest.bannerremover.config.ConfigLoader;
-import maventest.bannerremover.sizechecker.ImageSize;
 import maventest.bannerremover.sizechecker.SizeChecker;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
