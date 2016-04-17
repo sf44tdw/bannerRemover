@@ -10,8 +10,13 @@ import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Collections;
@@ -22,7 +27,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import maventest.bannerremover.BannerRemover;
 import maventest.bannerremover.sizechecker.ImageSize;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * 設定ファイルのロードとチェックを行う。
@@ -30,6 +40,8 @@ import maventest.bannerremover.sizechecker.ImageSize;
  * @author normal
  */
 public final class ConfigLoader {
+
+    private final Log log = LogFactory.getLog(ConfigLoader.class);
 
     private static enum CONFIG_FILE_KEY {
         DIRECTORY("directory"),
@@ -92,11 +104,10 @@ public final class ConfigLoader {
      */
     public ConfigLoader(File configFile) {
         File t_file = new File(configFile.getAbsolutePath());
-        if (!t_file.isFile()) {
-            throw new IllegalArgumentException("設定ファイルの読み込み先がファイルではないか、存在しない。 " + t_file.getAbsolutePath());
-        }
 
-        Toml toml = new Toml().read(configFile);
+        Toml toml = null;
+
+        toml = new Toml().read(t_file);
 
         this.sourceDir = new File(toml.getString(CONFIG_FILE_KEY.SOURCE_DIR.getKey()));
         if (!this.sourceDir.isDirectory()) {

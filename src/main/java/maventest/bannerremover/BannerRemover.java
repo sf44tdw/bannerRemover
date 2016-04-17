@@ -17,6 +17,7 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * 画像ファイルの中から特定のサイズのものを探して除去する。
+ * 設定ファイルはUTF-9 BOM無しの文字コードを使用する必要あり。
  */
 public class BannerRemover {
 
@@ -26,7 +27,7 @@ public class BannerRemover {
     public static void main(String[] args) {
         Log log = LogFactory.getLog(BannerRemover.class);
 
-
+       
         ConfigLoader conf = new ConfigLoader(new File(args[0]));
 
         PictureFileSeeker seeker = new PictureFileSeeker(conf.getSourceDir());
