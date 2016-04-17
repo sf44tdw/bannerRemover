@@ -25,6 +25,8 @@ public class BannerRemover {
      */
     public static void main(String[] args) {
         Log log = LogFactory.getLog(BannerRemover.class);
+        
+        
         ConfigLoader conf = null;
         try {
             conf = new ConfigLoader(new File(args[0]));

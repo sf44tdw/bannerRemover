@@ -13,9 +13,8 @@
         </layout>
     </appender>
     
-    
     <root>
-        <priority value="info" />
+        <priority value="debug" />
         <appender-ref ref="sizeRotation1" />
     </root>
 </log4j:configuration>
