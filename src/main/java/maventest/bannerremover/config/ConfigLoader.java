@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import maventest.bannerremover.sizechecker.ImageSize;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -32,9 +33,9 @@ import org.apache.commons.logging.LogFactory;
  * @author normal
  */
 public final class ConfigLoader {
-    
+
     private final Log log = LogFactory.getLog(ConfigLoader.class);
-    
+
     private static enum CONFIG_FILE_KEY {
         DIRECTORY("directory"),
         SOURCE_DIR(DIRECTORY, "source"),
@@ -44,16 +45,16 @@ public final class ConfigLoader {
         IMAGE_SIZE("imagesize"),
         HEIGHT(IMAGE_SIZE, "Height"),
         WIDTH(IMAGE_SIZE, "Width");
-        
+
         private final String key_full;
         private final String lastKey;
-        
+
         private CONFIG_FILE_KEY(String key) {
             this(null, key);
         }
-        
+
         private CONFIG_FILE_KEY(CONFIG_FILE_KEY parent, String key) {
-            
+
             CONFIG_FILE_KEY parent_t = parent;
             String key_t = key;
             this.lastKey = key_t;
@@ -70,22 +71,22 @@ public final class ConfigLoader {
             }
             this.key_full = sb.toString();
         }
-        
+
         public String getLastKey() {
             return lastKey;
         }
-        
+
         public String getKey() {
             return this.key_full;
         }
-        
+
         @Override
         public String toString() {
             return "CONFIG_FILE_KEY{" + "key_full=" + key_full + ", lastKey=" + lastKey + '}';
         }
-        
+
     }
-    
+
     private final File sourceDir;
     private final File destDir;
     private final boolean recursive;
@@ -100,20 +101,20 @@ public final class ConfigLoader {
             throw new IllegalArgumentException("設定ファイルが見つからない。 " + t_file.getAbsolutePath());
         }
         log.info("設定ファイルロード開始。ファイル=" + t_file.getAbsolutePath());
-        
+
         Toml toml = null;
         toml = new Toml().read(t_file);
-        
+
         this.sourceDir = new File(toml.getString(CONFIG_FILE_KEY.SOURCE_DIR.getKey()));
         if (!this.sourceDir.isDirectory()) {
             throw new IllegalArgumentException("検索先がディレクトリではないか、存在しない。 " + this.sourceDir.getAbsolutePath());
         }
-        
+
         this.destDir = new File(toml.getString(CONFIG_FILE_KEY.DEST_DIR.getKey()));
         if (!this.destDir.isDirectory()) {
             throw new IllegalArgumentException("移動先がディレクトリではないか、存在しない。 " + this.destDir.getAbsolutePath());
         }
-        
+
         if (this.sourceDir.equals(this.destDir)) {
             throw new IllegalArgumentException("送り側と受け側のディレクトリが同じ。");
         }
@@ -123,9 +124,9 @@ public final class ConfigLoader {
         //省略されている場合はサブディレクトリ探索を行うものとする。
         this.recursive = toml.getBoolean(CONFIG_FILE_KEY.RECURSIVE_FLAG.getKey(), true);
         log.info("サブディレクトリ探索実施フラグ=" + this.recursive);
-        
+
         Set<ImageSize> sizes_t = new HashSet<>();
-        
+
         List<HashMap<String, Long>> sizes_Raw = toml.getList(CONFIG_FILE_KEY.IMAGE_SIZE.getKey());
         if (sizes_Raw == null) {
             throw new IllegalArgumentException("画像サイズの設定がされていない。");
@@ -138,20 +139,21 @@ public final class ConfigLoader {
             sizes_t.add(is);
         }
         this.sizes = Collections.unmodifiableSet(sizes_t);
+        log.info("設定ファイルロード完了。ファイル=" + t_file.getAbsolutePath());
     }
-    
+
     public File getSourceDir() {
         return sourceDir;
     }
-    
+
     public File getDestDir() {
         return destDir;
     }
-    
+
     public boolean isRecursive() {
         return recursive;
     }
-    
+
     public Set<ImageSize> getSizes() {
         return sizes;
     }
@@ -162,63 +164,6 @@ public final class ConfigLoader {
      * @return このオブジェクトが保存している内容を文字列に変換したもの。
      */
     public String toString() {
-        try {
-            final BeanInfo info = Introspector.getBeanInfo(this.getClass(), Object.class);
-            final PropertyDescriptor[] props = info.getPropertyDescriptors();
-            final StringBuffer buf = new StringBuffer(500);
-            Object value = null;
-            buf.append(getClass().getName());
-            buf.append("@");  //$NON-NLS-1$
-            buf.append(hashCode());
-            buf.append("={");  //$NON-NLS-1$
-            for (int idx = 0; idx < props.length; idx++) {
-                if (idx != 0) {
-                    buf.append(", ");  //$NON-NLS-1$
-                }
-                buf.append(props[idx].getName());
-                buf.append("=");  //$NON-NLS-1$
-                if (props[idx].getReadMethod() != null) {
-                    value = props[idx].getReadMethod()
-                            .invoke(this, new Object[]{});
-                    if (value instanceof ConfigLoader) {
-                        buf.append("@");  //$NON-NLS-1$
-                        buf.append(value.hashCode());
-                    } else if (value instanceof Collection) {
-                        buf.append("{");  //$NON-NLS-1$
-                        for (Object element : ((Collection<?>) value)) {
-                            if (element instanceof ConfigLoader) {
-                                buf.append("@");  //$NON-NLS-1$
-                                buf.append(element.hashCode());
-                            } else {
-                                buf.append(element.toString());
-                            }
-                        }
-                        buf.append("}");  //$NON-NLS-1$
-                    } else if (value instanceof Map) {
-                        buf.append("{");  //$NON-NLS-1$
-                        Map<?, ?> map = (Map) value;
-                        for (Object key : map.keySet()) {
-                            Object element = map.get(key);
-                            buf.append(key.toString()).append("=");
-                            if (element instanceof ConfigLoader) {
-                                buf.append("@");  //$NON-NLS-1$
-                                buf.append(element.hashCode());
-                            } else {
-                                buf.append(element.toString());
-                            }
-                        }
-                        buf.append("}");  //$NON-NLS-1$
-                    } else if (value != null) {
-                        buf.append(value);
-                    } else {
-                        buf.append("null");
-                    }
-                }
-            }
-            buf.append("}");  //$NON-NLS-1$
-            return buf.toString();
-        } catch (IntrospectionException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-            throw new RuntimeException(ex);
-        }
+        return ToStringBuilder.reflectionToString(this);
     }
 }

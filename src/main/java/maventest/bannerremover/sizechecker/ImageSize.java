@@ -5,6 +5,8 @@
  */
 package maventest.bannerremover.sizechecker;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
  * 画像のサイズを指定する。
  * @author normal
@@ -62,7 +64,7 @@ public class ImageSize {
 
     @Override
     public String toString() {
-        return "ImageSize{" + "Height=" + Height + ", Width=" + Width + '}';
+        return ToStringBuilder.reflectionToString(this);
     }
 
 }
