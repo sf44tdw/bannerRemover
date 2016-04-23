@@ -6,21 +6,14 @@
 package maventest.bannerremover.config;
 
 import com.moandjiezana.toml.Toml;
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayDeque;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import maventest.bannerremover.sizechecker.ImageSize;
 import org.apache.commons.lang3.builder.ToStringBuilder;
