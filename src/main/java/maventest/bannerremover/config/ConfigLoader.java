@@ -112,7 +112,7 @@ public final class ConfigLoader {
             throw new IllegalArgumentException("送り側と受け側のディレクトリが同じ。");
         }
         log.info("検索先=" + this.sourceDir.getAbsolutePath());
-        log.info("移動先=" + this.sourceDir.getAbsolutePath());
+        log.info("移動先=" + this.destDir.getAbsolutePath());
 
         //省略されている場合はサブディレクトリ探索を行うものとする。
         this.recursive = toml.getBoolean(CONFIG_FILE_KEY.RECURSIVE_FLAG.getKey(), true);
