@@ -16,7 +16,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * 画像ファイルの中から特定のサイズのものを探して除去する。 設定ファイルはUTF-9 BOM無しの文字コードを使用する必要あり。
+ * 画像ファイルの中から特定のサイズのものを探して除去する。 設定ファイルはUTF-8 BOM無しの文字コードを使用する必要あり。
  */
 public class BannerRemover {
 
