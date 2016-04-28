@@ -121,7 +121,7 @@ public final class ConfigLoader {
         Set<ImageSize> sizes_t = new HashSet<>();
 
         List<HashMap<String, Long>> sizes_Raw = toml.getList(CONFIG_FILE_KEY.IMAGE_SIZE.getKey());
-        if (sizes_Raw == null) {
+        if ((sizes_Raw == null) || (sizes_Raw.isEmpty())) {
             throw new IllegalArgumentException("画像サイズの設定がされていない。");
         }
         for (HashMap<String, Long> size_Raw : sizes_Raw) {
