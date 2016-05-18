@@ -100,16 +100,22 @@ public final class ConfigLoader {
 
         this.sourceDir = new File(toml.getString(CONFIG_FILE_KEY.SOURCE_DIR.getKey()));
         if (!this.sourceDir.isDirectory()) {
-            throw new IllegalArgumentException("検索先がディレクトリではないか、存在しない。 " + this.sourceDir.getAbsolutePath());
+            IllegalArgumentException ex = new IllegalArgumentException("検索先がディレクトリではないか、存在しない。 " + this.sourceDir.getAbsolutePath());
+            log.error(ex);
+            throw ex;
         }
 
         this.destDir = new File(toml.getString(CONFIG_FILE_KEY.DEST_DIR.getKey()));
         if (!this.destDir.isDirectory()) {
-            throw new IllegalArgumentException("移動先がディレクトリではないか、存在しない。 " + this.destDir.getAbsolutePath());
+            IllegalArgumentException ex = new IllegalArgumentException("移動先がディレクトリではないか、存在しない。 " + this.destDir.getAbsolutePath());
+            log.error(ex);
+            throw ex;
         }
 
         if (this.sourceDir.equals(this.destDir)) {
-            throw new IllegalArgumentException("送り側と受け側のディレクトリが同じ。");
+            IllegalArgumentException ex = new IllegalArgumentException("送り側と受け側のディレクトリが同じ。");
+            log.error(ex);
+            throw ex;
         }
         log.info("検索先=" + this.sourceDir.getAbsolutePath());
         log.info("移動先=" + this.destDir.getAbsolutePath());
@@ -122,7 +128,9 @@ public final class ConfigLoader {
 
         List<HashMap<String, Long>> sizes_Raw = toml.getList(CONFIG_FILE_KEY.IMAGE_SIZE.getKey());
         if ((sizes_Raw == null) || (sizes_Raw.isEmpty())) {
-            throw new IllegalArgumentException("画像サイズの設定がされていない。");
+            IllegalArgumentException ex = new IllegalArgumentException("画像サイズの設定がされていない。");
+            log.error(ex);
+            throw ex;
         }
         for (HashMap<String, Long> size_Raw : sizes_Raw) {
             int h = new Integer(size_Raw.get(CONFIG_FILE_KEY.HEIGHT.getLastKey()).toString());
