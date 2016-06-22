@@ -9,13 +9,8 @@ import maventest.bannerremover.config.mapobjects.ImageSize;
 import maventest.bannerremover.config.mapobjects.Config;
 import com.moandjiezana.toml.Toml;
 import java.io.File;
-import java.util.ArrayDeque;
 import java.util.Collections;
-import java.util.Deque;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 import maventest.bannerremover.sizechecker.ImageSize_IM;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -30,57 +25,6 @@ import org.apache.commons.logging.LogFactory;
 public final class ConfigLoader {
 
     private final Log log = LogFactory.getLog(ConfigLoader.class);
-
-    private static enum CONFIG_FILE_KEY {
-        DIRECTORY("directory"),
-        SOURCE_DIR(DIRECTORY, "source"),
-        DEST_DIR(DIRECTORY, "dest"),
-        RECURSIVE("recursive"),
-        RECURSIVE_FLAG(RECURSIVE, "recursive"),
-        IMAGE_SIZE("imagesize"),
-        HEIGHT(IMAGE_SIZE, "Height"),
-        WIDTH(IMAGE_SIZE, "Width");
-
-        private final String key_full;
-        private final String lastKey;
-
-        private CONFIG_FILE_KEY(String key) {
-            this(null, key);
-        }
-
-        private CONFIG_FILE_KEY(CONFIG_FILE_KEY parent, String key) {
-
-            CONFIG_FILE_KEY parent_t = parent;
-            String key_t = key;
-            this.lastKey = key_t;
-            Deque<String> stack = new ArrayDeque<>();
-            stack.add(key_t);
-            if (parent_t != null) {
-                stack.add(".");
-                stack.add(parent_t.getKey());
-            }
-            StringBuilder sb = new StringBuilder();
-            Iterator<String> e = stack.descendingIterator();
-            while (e.hasNext()) {
-                sb.append(e.next());
-            }
-            this.key_full = sb.toString();
-        }
-
-        public String getLastKey() {
-            return lastKey;
-        }
-
-        public String getKey() {
-            return this.key_full;
-        }
-
-        @Override
-        public String toString() {
-            return "CONFIG_FILE_KEY{" + "key_full=" + key_full + ", lastKey=" + lastKey + '}';
-        }
-
-    }
 
     private final File sourceDir;
     private final File destDir;
@@ -151,11 +95,11 @@ public final class ConfigLoader {
     }
 
     public File getSourceDir() {
-        return sourceDir;
+        return new File(sourceDir.getAbsolutePath());
     }
 
     public File getDestDir() {
-        return destDir;
+        return new File(destDir.getAbsolutePath());
     }
 
     public boolean isRecursive() {
