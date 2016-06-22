@@ -8,7 +8,7 @@ package maventest.bannerremover.config;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
-import maventest.bannerremover.sizechecker.ImageSize;
+import maventest.bannerremover.sizechecker.ImageSize_IM;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -136,12 +136,12 @@ public class ConfigLoaderTest {
         System.out.println("getSizes");
         ConfigLoader instance = new ConfigLoader(this.normalFile);
 
-        Set<ImageSize> expResult = new HashSet<>();
-        expResult.add(new ImageSize(20, 30));
-        expResult.add(new ImageSize(40, 50));
-        expResult.add(new ImageSize(60, 70));
+        Set<ImageSize_IM> expResult = new HashSet<>();
+        expResult.add(new ImageSize_IM(20, 30));
+        expResult.add(new ImageSize_IM(40, 50));
+        expResult.add(new ImageSize_IM(60, 70));
 
-        Set<ImageSize> result = instance.getSizes();
+        Set<ImageSize_IM> result = instance.getSizes();
         assertEquals(expResult, result);
     }
 

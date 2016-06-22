@@ -31,8 +31,8 @@ public class SizeCheckerTest {
         this.targetInstance = new SizeChecker(this.fl.getImageList());
 
         //f5
-        Set<ImageSize> temp = new HashSet<>();
-        temp.add(new ImageSize(76, 110));
+        Set<ImageSize_IM> temp = new HashSet<>();
+        temp.add(new ImageSize_IM(76, 110));
         this.targetInstance.setSizes(temp);
     }
 
@@ -72,9 +72,9 @@ public class SizeCheckerTest {
     public void testGetSizes() {
         System.out.println("getSizes");
         SizeChecker instance = this.targetInstance;
-        Set<ImageSize> expResult = new HashSet<>();
-        expResult.add(new ImageSize(76, 110));
-        Set<ImageSize> result = instance.getSizes();
+        Set<ImageSize_IM> expResult = new HashSet<>();
+        expResult.add(new ImageSize_IM(76, 110));
+        Set<ImageSize_IM> result = instance.getSizes();
         assertEquals(expResult, result);
     }
 
@@ -84,8 +84,8 @@ public class SizeCheckerTest {
     @Test
     public void testSetSizes() {
         System.out.println("setSizes");
-        Set<ImageSize> sizes = new HashSet<>();
-        sizes.add(new ImageSize(76, 110));
+        Set<ImageSize_IM> sizes = new HashSet<>();
+        sizes.add(new ImageSize_IM(76, 110));
         SizeChecker instance = new SizeChecker(this.fl.getImageList());
         instance.setSizes(sizes);
 

@@ -26,7 +26,7 @@ public class SizeChecker implements PictureChecker {
 
     private final Log log = LogFactory.getLog(SizeChecker.class);
     private final List<File> ImageList;
-    private Set<ImageSize> sizes;
+    private Set<ImageSize_IM> sizes;
 
     /**
      * 渡されたファイルリストに載っている画像ファイルのピクセル数が特定のサイズであるかチェックし、一致したファイルのみをリストにする。
@@ -37,12 +37,12 @@ public class SizeChecker implements PictureChecker {
         this.ImageList = ImageList;
     }
 
-    public Set<ImageSize> getSizes() {
+    public Set<ImageSize_IM> getSizes() {
         return sizes;
     }
 
-    public void setSizes(Set<ImageSize> sizes) {
-        Set<ImageSize> temp = new HashSet<>();
+    public void setSizes(Set<ImageSize_IM> sizes) {
+        Set<ImageSize_IM> temp = new HashSet<>();
         temp.addAll(sizes);
         this.sizes = Collections.unmodifiableSet(temp);
     }
@@ -55,10 +55,10 @@ public class SizeChecker implements PictureChecker {
     public Set<File> makeList() {
         Set<File> set_output = Collections.synchronizedSet(new HashSet<File>());
         for (File F : this.ImageList) {
-            ImageSize s = new ImageSize(0, 0);
+            ImageSize_IM s = new ImageSize_IM(0, 0);
             try {
                 BufferedImage Img = ImageIO.read(F);
-                s = new ImageSize(Img.getHeight(), Img.getWidth());
+                s = new ImageSize_IM(Img.getHeight(), Img.getWidth());
             } catch (IOException e) {
                 //エラーが起きた場合、そのときのファイル名を出力する。
                 log.fatal("ファイル読み込み中にエラー ファイル = " + F.toString(), e);

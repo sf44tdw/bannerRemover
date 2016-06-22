@@ -11,7 +11,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  * 画像のサイズを指定する。
  * @author normal
  */
-public class ImageSize {
+public class ImageSize_IM {
 
     private final int Height;
     private final int Width;
@@ -20,7 +20,7 @@ public class ImageSize {
      * @param Height 高さ方向のピクセル数。
      * @param Width 幅方向のピクセル数。
  */
-    public ImageSize(int Height, int Width) {
+    public ImageSize_IM(int Height, int Width) {
         this.Height = Height;
         this.Width = Width;
     }
@@ -52,7 +52,7 @@ public class ImageSize {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final ImageSize other = (ImageSize) obj;
+        final ImageSize_IM other = (ImageSize_IM) obj;
         if (this.Height != other.Height) {
             return false;
         }

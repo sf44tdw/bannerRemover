@@ -5,6 +5,8 @@
  */
 package maventest.bannerremover.config;
 
+import maventest.bannerremover.config.mapobjects.ImageSize;
+import maventest.bannerremover.config.mapobjects.Config;
 import com.moandjiezana.toml.Toml;
 import java.io.File;
 import java.util.ArrayDeque;
@@ -15,7 +17,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import maventest.bannerremover.sizechecker.ImageSize;
+import maventest.bannerremover.sizechecker.ImageSize_IM;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -83,7 +85,7 @@ public final class ConfigLoader {
     private final File sourceDir;
     private final File destDir;
     private final boolean recursive;
-    private final Set<ImageSize> sizes;
+    private final Set<ImageSize_IM> sizes;
 
     /**
      * @param configFile 設定ファイルのパス
@@ -95,17 +97,18 @@ public final class ConfigLoader {
         }
         log.info("設定ファイルロード開始。ファイル=" + t_file.getAbsolutePath());
 
-        Toml toml = null;
-        toml = new Toml().read(t_file);
+        Config conf = new Toml().read(t_file).to(Config.class);
 
-        this.sourceDir = new File(toml.getString(CONFIG_FILE_KEY.SOURCE_DIR.getKey()));
+        log.debug(conf);
+
+        this.sourceDir = new File(conf.directory.source);
         if (!this.sourceDir.isDirectory()) {
             IllegalArgumentException ex = new IllegalArgumentException("検索先がディレクトリではないか、存在しない。 " + this.sourceDir.getAbsolutePath());
             log.error(ex);
             throw ex;
         }
 
-        this.destDir = new File(toml.getString(CONFIG_FILE_KEY.DEST_DIR.getKey()));
+        this.destDir = new File(conf.directory.dest);
         if (!this.destDir.isDirectory()) {
             IllegalArgumentException ex = new IllegalArgumentException("移動先がディレクトリではないか、存在しない。 " + this.destDir.getAbsolutePath());
             log.error(ex);
@@ -121,24 +124,28 @@ public final class ConfigLoader {
         log.info("移動先=" + this.destDir.getAbsolutePath());
 
         //省略されている場合はサブディレクトリ探索を行うものとする。
-        this.recursive = toml.getBoolean(CONFIG_FILE_KEY.RECURSIVE_FLAG.getKey(), true);
+        if (conf.recursive == null) {
+            this.recursive = true;
+        } else {
+            this.recursive = conf.recursive.recursive;
+        }
+
         log.info("サブディレクトリ探索実施フラグ=" + this.recursive);
 
-        Set<ImageSize> sizes_t = new HashSet<>();
-
-        List<HashMap<String, Long>> sizes_Raw = toml.getList(CONFIG_FILE_KEY.IMAGE_SIZE.getKey());
-        if ((sizes_Raw == null) || (sizes_Raw.isEmpty())) {
+        if (conf.imagesize == null || conf.imagesize.length == 0) {
             IllegalArgumentException ex = new IllegalArgumentException("画像サイズの設定がされていない。");
             log.error(ex);
             throw ex;
         }
-        for (HashMap<String, Long> size_Raw : sizes_Raw) {
-            int h = new Integer(size_Raw.get(CONFIG_FILE_KEY.HEIGHT.getLastKey()).toString());
-            int w = new Integer(size_Raw.get(CONFIG_FILE_KEY.WIDTH.getLastKey()).toString());
-            ImageSize is = new ImageSize(h, w);
-            log.info("選択対象画像ピクセル=" + is);
-            sizes_t.add(is);
+
+        Set<ImageSize_IM> sizes_t = new HashSet<>();
+
+        for (ImageSize im : conf.imagesize) {
+            ImageSize_IM imsim = new ImageSize_IM(im.Height, im.Width);
+            log.info("選択対象画像ピクセル=" + imsim);
+            sizes_t.add(imsim);
         }
+
         this.sizes = Collections.unmodifiableSet(sizes_t);
         log.info("設定ファイルロード完了。ファイル=" + t_file.getAbsolutePath());
     }
@@ -155,7 +162,7 @@ public final class ConfigLoader {
         return recursive;
     }
 
-    public Set<ImageSize> getSizes() {
+    public Set<ImageSize_IM> getSizes() {
         return sizes;
     }
 
