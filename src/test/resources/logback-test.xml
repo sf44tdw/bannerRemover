@@ -1,9 +1,10 @@
 <configuration>
+	<property name="LOG_DIR" value="bannerremover_log" />
 	<property name="FILENAME_COMMON"
-		value="bannerremover" />
+		value="bannerremover_test" />
 	<appender name="FILE"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${FILENAME_COMMON}.log</file>
+		<file>${user.home}/${LOG_DIR}/${FILENAME_COMMON}.log</file>
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- daily rollover -->
@@ -21,8 +22,8 @@
 		</encoder>
 	</appender>
 
-	<!-- ログは全部ファイルに書く。 -->
-	<root level="INFO">
+	<!-- テストに不具合が出るのでログは全部ファイルに書く。 -->
+	<root level="DEBUG">
 		<appender-ref ref="FILE" />
 	</root>
 	>
