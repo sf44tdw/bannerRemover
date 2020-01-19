@@ -5,16 +5,19 @@
  */
 package maventest.bannerremover.config;
 
+import static org.junit.Assert.*;
+
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
-import maventest.bannerremover.sizechecker.ImageSize_IM;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import maventest.bannerremover.sizechecker.ImageSize_IM;
 
 /**
  *
@@ -47,25 +50,29 @@ public class ConfigLoaderTest {
     @Test(expected = IllegalArgumentException.class)
     public void construct1() {
         System.out.println("検索先がディレクトリではないか、存在しない");
+        @SuppressWarnings("unused")
         ConfigLoader instance = new ConfigLoader(new File(this.sourceDir, "nosrc.toml"));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void construct2() {
         System.out.println("移動先がディレクトリではないか、存在しない");
+        @SuppressWarnings("unused")
         ConfigLoader instance = new ConfigLoader(new File(this.sourceDir, "nodest.toml"));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void construct3() {
         System.out.println("送り側と受け側のディレクトリが同じ");
+        @SuppressWarnings("unused")
         ConfigLoader instance = new ConfigLoader(new File(this.sourceDir, "samedir.toml"));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void construct4() {
         System.out.println("画像サイズの設定がされていない");
-        ConfigLoader instance = new ConfigLoader(new File(this.sourceDir, "nosizes.toml"));
+        @SuppressWarnings("unused")
+		ConfigLoader instance = new ConfigLoader(new File(this.sourceDir, "nosizes.toml"));
     }
 
     /**
